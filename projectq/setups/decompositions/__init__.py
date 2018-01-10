@@ -14,6 +14,7 @@
 
 from . import (arb1qubit2rzandry,
                barrier,
+               cry2crzandhadamardandsgate,
                carb1qubit2cnotrzandry,
                crz2cxandrz,
                cnu2toffoliandcu,
@@ -32,6 +33,7 @@ all_defined_decomposition_rules = [
     rule
     for module in [arb1qubit2rzandry,
                    barrier,
+                   cry2crzandhadamardandsgate,
                    carb1qubit2cnotrzandry,
                    crz2cxandrz,
                    cnu2toffoliandcu,
