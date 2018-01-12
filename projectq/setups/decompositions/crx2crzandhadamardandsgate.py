@@ -13,37 +13,35 @@
 #   limitations under the License.
 
 """
-Registers a decomposition for controlled Ry gates.
+Registers a decomposition for controlled Rx gates.
 
-It uses 1 controlled Rz, 2 Hadamards, 1 S, and 1 S^\dagger.
+It uses 1 controlled Rz and 2 Hadamards.
 """
 
 import math
 
 from projectq.cengines import DecompositionRule
 from projectq.meta import get_control_count
-from projectq.ops import Ry, Rz, H, S, Sdag, C
+from projectq.ops import Rx, Rz, H, C
 
 
-def _decompose_CRy(cmd):
-    """ Decompose the controlled Ry gate (into controlled Rz, H, and S)."""
+def _decompose_CRx(cmd):
+    """ Decompose the controlled Rx gate (into controlled Rz and H)."""
     qubit = cmd.qubits[0]
     ctrl = cmd.control_qubits
     gate = cmd.gate
     n = get_control_count(cmd)
 
-    Sdag | qubit
     H | qubit
     C(Rz(gate.angle), n) | (ctrl, qubit)
     H | qubit
-    S | qubit
 
 
-def _recognize_CRy(cmd):
-    """ Recognize the controlled Ry gate. """
+def _recognize_CRx(cmd):
+    """ Recognize the controlled Rx gate. """
     return get_control_count(cmd) >= 1
 
 
 all_defined_decomposition_rules = [
-    DecompositionRule(Ry, _decompose_CRy, _recognize_CRy)
+    DecompositionRule(Rx, _decompose_CRx, _recognize_CRx)
 ]
